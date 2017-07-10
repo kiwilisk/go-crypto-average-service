@@ -1,10 +1,11 @@
-package aws
+package myaws
 
 import (
 	"fmt"
 	"github.com/aws/aws-sdk-go/aws"
 	"github.com/aws/aws-sdk-go/aws/session"
 	"github.com/aws/aws-sdk-go/service/s3"
+	"github.com/aws/aws-sdk-go/service/s3/s3manager"
 	"os"
 )
 
@@ -13,6 +14,22 @@ func PrintBuckets() {
 	s3client := s3.New(sess)
 	result := retrieveListBucketResult(s3client)
 	printBucketsFrom(result)
+}
+
+func Download(bucketName *string, key *string) []byte {
+	sess := createSession()
+	downloader := s3manager.NewDownloader(sess)
+	buff := &aws.WriteAtBuffer{}
+	numBytes, err := downloader.Download(buff,
+		&s3.GetObjectInput{
+			Bucket: bucketName,
+			Key:    key,
+		})
+	if err != nil {
+		exitErrorf("Unable to download item with key %s from bucket %s, %v", key, bucketName, err)
+	}
+	fmt.Println("Downloaded", numBytes, "bytes")
+	return buff.Bytes()
 }
 
 func createSession() *session.Session {
