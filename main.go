@@ -1,7 +1,7 @@
 package main
 
 import (
-	"go-crypto-average-service/service"
+	"github.com/kiwilisk/go-crypto-average-service/service"
 	"log"
 	"net/http"
 )

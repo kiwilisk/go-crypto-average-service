@@ -2,9 +2,9 @@ package service
 
 import (
 	"github.com/golang/protobuf/proto"
-	"go-crypto-average-service/pb"
-	"go-crypto-average-service/s3bucket"
 	"os"
+	"github.com/kiwilisk/go-crypto-average-service/s3bucket"
+	"github.com/kiwilisk/go-crypto-average-service/pb"
 )
 
 func LoadFloatingAverage(symbol *string) (*floatingquotes.FloatingAverage, error) {
