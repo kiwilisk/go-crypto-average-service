@@ -7,8 +7,10 @@ import (
 	"github.com/kiwilisk/go-crypto-average-service/pb"
 )
 
+const envS3BucketName = "s3.bucketName"
+
 func LoadFloatingAverage(symbol *string) (*floatingquotes.FloatingAverage, error) {
-	bucketName := os.Getenv("s3.bucketName")
+	bucketName := os.Getenv(envS3BucketName)
 	depotBytes, err := s3bucket.Download(&bucketName, symbol)
 	if err != nil {
 		return nil, err

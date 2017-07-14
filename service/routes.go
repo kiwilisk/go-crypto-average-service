@@ -15,7 +15,7 @@ type Routes []Route
 
 var routes = Routes{
 	Route{
-		"Index",
+		"CurrencyAverageQuotes",
 		"GET",
 		"/currencies/{symbol}",
 		CurrencyHandler,

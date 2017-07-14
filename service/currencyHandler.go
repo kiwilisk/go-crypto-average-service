@@ -5,9 +5,11 @@ import (
 	"net/http"
 )
 
+const symbolRequestParameter = "symbol"
+
 func CurrencyHandler(writer http.ResponseWriter, request *http.Request) error {
 	vars := mux.Vars(request)
-	symbol := vars["symbol"]
+	symbol := vars[symbolRequestParameter]
 	floatingAverage, err := LoadFloatingAverage(&symbol)
 	if err != nil {
 		return err
