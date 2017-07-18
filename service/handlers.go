@@ -10,7 +10,8 @@ type AppHandler func(http.ResponseWriter, *http.Request) error
 
 func (handlerFunction AppHandler) ServeHTTP(responseWriter http.ResponseWriter, request *http.Request) {
 	if err := handlerFunction(responseWriter, request); err != nil {
-		http.Error(responseWriter, err.Error(), 500)
+		http.Error(responseWriter, "Request failed. See log for additional information.", 500)
+		log.Printf("%v", err)
 	}
 }
 
