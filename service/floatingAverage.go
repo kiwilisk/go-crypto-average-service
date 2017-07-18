@@ -2,9 +2,9 @@ package service
 
 import (
 	"github.com/golang/protobuf/proto"
-	"os"
-	"github.com/kiwilisk/go-crypto-average-service/s3bucket"
 	"github.com/kiwilisk/go-crypto-average-service/pb"
+	"github.com/kiwilisk/go-crypto-average-service/s3bucket"
+	"os"
 )
 
 const envS3BucketName = "s3.bucketName"
