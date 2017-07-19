@@ -13,15 +13,7 @@ type Route struct {
 
 type Routes []Route
 
-var routes = Routes{
-	Route{
-		"CurrencyAverageQuotes",
-		"GET",
-		"/currencies/{symbol}",
-		CurrencyHandler,
-	}}
-
-func NewRouter() *mux.Router {
+func NewRouter(routes Routes) *mux.Router {
 	router := mux.NewRouter().StrictSlash(true)
 	for _, route := range routes {
 		handler := LogRequest(route.HandlerFunc, route.Name)

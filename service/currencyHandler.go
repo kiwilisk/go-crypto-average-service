@@ -7,10 +7,19 @@ import (
 
 const symbolRequestParameter = "symbol"
 
-func CurrencyHandler(writer http.ResponseWriter, request *http.Request) error {
+type CurrencyHandler struct {
+	floatingAverageService FloatingAverageService
+}
+
+func NewCurrencyHandler(floatingAverageService FloatingAverageService) *CurrencyHandler {
+	return &CurrencyHandler{floatingAverageService}
+}
+
+func (handler CurrencyHandler) Handle(writer http.ResponseWriter, request *http.Request) error {
 	vars := mux.Vars(request)
 	symbol := vars[symbolRequestParameter]
-	floatingAverage, err := LoadFloatingAverage(&symbol)
+	floatingAverageService := handler.floatingAverageService
+	floatingAverage, err := floatingAverageService.Load(&symbol)
 	if err != nil {
 		return err
 	}
