@@ -14,3 +14,15 @@
 
 # Project-local glide cache, RE: https://github.com/Masterminds/glide/issues/736
 .glide/
+
+# venor
+**/vendor/**
+
+# go dep lock file
+Gopkg.lock
+
+# service binary after build script
+go-crypto-average-service
+
+#aws credentials
+aws/credentials
