@@ -8,13 +8,17 @@ import (
 	"github.com/kiwilisk/go-crypto-average-service/service"
 	"log"
 	"net/http"
-	"os"
+	"flag"
 )
 
-const envS3BucketName = "s3.bucketName"
+const bucketFlagName = "bucket"
 
 func main() {
-	binaryBucket := createS3Bucket()
+	log.Println("Starting go-crypto-average-service, listening on 8080")
+	bucketName := flag.String(bucketFlagName,  "someBucket","the s3 bucket name to retrieve data")
+	flag.Parse()
+
+	binaryBucket := createS3Bucket(bucketName)
 	floatingAverageService := service.NewS3FloatingAverageService(binaryBucket)
 	currencyHandler := service.NewCurrencyHandler(floatingAverageService)
 	router := createRouter(currencyHandler)
@@ -22,12 +26,11 @@ func main() {
 	log.Fatal(http.ListenAndServe(":8080", router))
 }
 
-func createS3Bucket() *s3bucket.S3BinaryBucket {
+func createS3Bucket(bucketName *string) *s3bucket.S3BinaryBucket {
 	sharedSession := createSession()
 	downloader := s3manager.NewDownloader(sharedSession)
 	keyProvider := s3bucket.NewHexKeyProvider()
-	bucketName := os.Getenv(envS3BucketName)
-	binaryBucket := s3bucket.NewS3BinaryBucket(downloader, keyProvider, &bucketName)
+	binaryBucket := s3bucket.NewS3BinaryBucket(downloader, keyProvider, bucketName)
 	return binaryBucket
 }
 

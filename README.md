@@ -11,4 +11,4 @@ Dependency management with [dep](https://github.com/golang/dep).
 Usage with docker (just a reminder to me):
 * copy credentials file from ~/.aws directory to this aws folder
 * execute build.sh
-* execute docker run -p 8080:8080 go-crypto-average-service
+* execute docker run -p 8080:8080 go-crypto-average-service -bucket=yourBucketName

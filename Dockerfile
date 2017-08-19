@@ -1,20 +1,12 @@
-FROM golang:alpine
+FROM scratch
+
+ADD certs/ca-certificates.crt /etc/ssl/certs/
+ADD go-crypto-average-service /
+ADD aws/credentials /.aws/
+ADD aws/config /.aws/
+
+USER 1001
+
 EXPOSE 8080
-
-ENV USER_NAME crypto_user
-ENV APP_HOME /home/$USER_NAME/app
-ENV s3.bucketName floating-average-crypto
-
-RUN adduser -D -u 1000 $USER_NAME
-RUN mkdir $APP_HOME
-
-ADD go-crypto-average-service $APP_HOME
-ADD aws/credentials /home/$USER_NAME/.aws/
-ADD aws/config /home/$USER_NAME/.aws/
-
-RUN chown $USER_NAME $APP_HOME/go-crypto-average-service
-
-USER $USER_NAME
-WORKDIR $APP_HOME
 
 ENTRYPOINT ["./go-crypto-average-service"]
